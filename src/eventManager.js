@@ -5,6 +5,7 @@ import {
 // 事件管理, 事件统一注册在eventHub对象中
 var eventHub = new Vue({})
 
+// 通过mixin混入，将vue组件的method方法，注册到事件管理器中
 Vue.mixin({
   created: function () {
     var eventMap = this.$options.methods
@@ -20,6 +21,8 @@ Vue.mixin({
 })
 
 // 事件全局触发
-Ubase.invoke = function (event, ...args) {
+function invoke(event, ...args) {
   eventHub.$emit(event, ...args)
 }
+
+export  {invoke}
