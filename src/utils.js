@@ -42,6 +42,13 @@ function getFixedMainLayout() {
   $('body').prepend(layout)
 }
 
+ function updateState(vuexName, stateOptions) {
+  var vuex = gStore.modules[vuexName]
+  _.each(_.keys(stateOptions), function (item) {
+    _.set(vuex.state, item, stateOptions[item])
+  })
+}
+
 function getConfig() {
   return gConfig || {}
 }
@@ -126,5 +133,6 @@ export {
   preLoadResource,
   showLoading,
   hideLoading,
+  updateState,
   setRequestAnimation
 }
