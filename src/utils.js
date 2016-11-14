@@ -6,6 +6,7 @@ import {
 let gConfig = null
 let gRouter = null
 let gRootApp = null
+let gStore = null
 
 function preLoadResource(next, routes) {
   var beforeInit = getUserConfig('beforeInit')
@@ -18,6 +19,7 @@ function preLoadResource(next, routes) {
       config: gConfig,
       router: gRouter,
       routes: routes,
+      rootApp: gRootApp,
       next: next
     })
   } else {
@@ -39,7 +41,6 @@ function getFixedMainLayout() {
   var layout = '<header></header><main><app></app></main><footer></footer>'
   $('body').prepend(layout)
 }
-
 
 function getConfig() {
   return gConfig || {}
@@ -63,6 +64,14 @@ function getRouter() {
 
 function setRouter(router) {
   gRouter = router
+}
+
+function getStore() {
+  return gStore
+}
+
+function setStore(store) {
+  gStore = store
 }
 
 /* =================APP loading动画===================== */
