@@ -10,6 +10,7 @@ import {
   setRouter,
   getConfig,
   setRootApp,
+  setStore,
   setRequestAnimation
 } from './utils'
 
@@ -27,6 +28,7 @@ function boot(store, routes) {
     routes: routes
   })
   setRouter(router)
+  setStore(store)
 
   var rootApp = new Vue({
     router,
