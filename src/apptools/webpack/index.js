@@ -22,9 +22,12 @@ colors.setTheme({
   error: 'red'
 })
 
+var projectType = null
+
 export default (path, webpack, userConfig) => {
   var entrys = {}
 
+  projectType = checkProjectType(path)
   generatorEntryFiles(path, webpack, userConfig, entrys)
 
   var watcher = chokidar.watch([path.resolve(config.src) + '/pages/', path.resolve(config.src) + '/components/'], {
@@ -59,7 +62,7 @@ export default (path, webpack, userConfig) => {
     },
 
     output: {
-      publicPath: userConfig.projectType === 'singleApp' ? './' : '../',
+      publicPath: projectType === 'singleApp' ? './' : '../',
       filename: config.isDevelope ? '[name].js' : '[name]-[chunkhash].js',
       chunkFilename: '[name]-[id].js',
     },
@@ -97,6 +100,15 @@ export default (path, webpack, userConfig) => {
   return webpackConfig
 }
 
+function  checkProjectType(path,) {
+  var projectType = null
+  if(fs.existsSync(path.resolve(config.src) + '/pages/index.html') && fs.existsSync(path.resolve(config.src) + '/pages/routes.js')){
+    projectType = 'singleApp'
+  }
+
+  return projectType
+}
+
 function generatorEntryFiles(path, webpack, userConfig, entrys) {
   // appPathList 工程下所有app的主页面入口文件
   let appPathList = glob.sync(path.resolve(config.src) + '/pages/*')
@@ -104,7 +116,7 @@ function generatorEntryFiles(path, webpack, userConfig, entrys) {
   // app入口文件模板
   let appEntryTemplate = fs.readFileSync(__dirname + '/../appindex/index.js', 'utf8')
 
-  if (userConfig.projectType === 'singleApp') {
+  if (projectType === 'singleApp') {
     appPathList = ['.']
   }
 
@@ -161,7 +173,7 @@ function generatorEntryFiles(path, webpack, userConfig, entrys) {
 
     entrys[appName + '/main'] = entryFilePath
 
-    if (userConfig.projectType === 'singleApp') {
+    if (projectType === 'singleApp') {
       entrys = entryFilePath
     }
   })
