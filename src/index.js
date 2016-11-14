@@ -8,6 +8,7 @@ import locales from './locales.js'
 import jquery from 'jquery'
 import lodash from 'lodash'
 import {boot} from './boot'
+import {invoke} from './eventManager'
 import $script from 'scriptjs'
 
 import {
@@ -16,32 +17,28 @@ import {
   initLoadingAnimation,
   showLoading,
   hideLoading,
+  updateState,
 } from './utils'
 
+// Ubase对应用开发暴露的接口
 window.Ubase = {}
 window.Ubase.showLoading = showLoading
 window.Ubase.hideLoading = hideLoading
-window.Ubase.beforeInit = null // 定制钩子 params {config，router, routes，next}
+window.Ubase.updateState = updateState
+window.Ubase.invoke = invoke
+window.Ubase.beforeInit = null // 定制应用启动前处理钩子 params {config，router, routes，rootApp, next}
 
+// ubase构建工具私有方法
 window._UBASE_PRIVATE = {}
 window._UBASE_PRIVATE.startApp = startApp
 window._UBASE_PRIVATE.init = appInit
 window._UBASE_PRIVATE.initI18n = initI18n
-
-require('jquery.nicescroll')
-require('./eventManager')
 
 /* ================start window全局变量=================== */
 window.$ = jquery
 window.jQuery = jquery
 window._ = lodash
 window.$script = $script
-
-// deprecated
-window.UBASE_STARTAPP = startApp
-window.UBASE_INIT = appInit
-window.UBASE_INITI18N = initI18n
-
 window.Vue = Vue
 
 /* ================end window全局变量=================== */
@@ -70,16 +67,6 @@ function initI18n(i18nData) {
 
 // 应用启动入口
 function startApp(unused, store, routes) {
-  addUpdateStateMethod(store)
   initLoadingAnimation()
   boot(store, routes)
-}
-
-function addUpdateStateMethod(store) {
-  Ubase.updateState = function (vuexName, stateOptions) {
-    var vuex = store.modules[vuexName]
-    _.each(_.keys(stateOptions), function (item) {
-      _.set(vuex.state, item, stateOptions[item])
-    })
-  }
 }
