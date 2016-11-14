@@ -134,5 +134,6 @@ export {
   showLoading,
   hideLoading,
   updateState,
+  setStore,
   setRequestAnimation
 }

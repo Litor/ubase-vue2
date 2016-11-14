@@ -5,12 +5,14 @@
   var hideLoading = window.Ubase.hideLoading
   var gConfig = null
   var gRoutes = []
+  var gRootApp =null
 
   window.Ubase.beforeInit = function (transition) {
     showLoading()
 
     gConfig = transition.config
     gRouter = transition.router
+    gRootApp = transition.rootApp
     setModules(transition.routes)
     loadCss()
 
@@ -59,7 +61,8 @@
       '/fe_components/bh_utils.js',
       '/fe_components/emap{{version}}.js',
       '/fe_components/amp/ampPlugins.min.js',
-      '/fe_components/jqwidget/globalize.js'
+      '/fe_components/jqwidget/globalize.js',
+      '/bower_components/jquery.nicescroll/jquery.nicescroll.min.js'
     ],
 
     'PUBLIC_NORMAL_JS': [

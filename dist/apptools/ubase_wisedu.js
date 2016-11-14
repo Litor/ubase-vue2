@@ -7,12 +7,14 @@
   var hideLoading = window.Ubase.hideLoading;
   var gConfig = null;
   var gRoutes = [];
+  var gRootApp = null;
 
   window.Ubase.beforeInit = function (transition) {
     showLoading();
 
     gConfig = transition.config;
     gRouter = transition.router;
+    gRootApp = transition.rootApp;
     setModules(transition.routes);
     loadCss();
 
@@ -52,7 +54,7 @@
     'RESOURCE_VERSION': '100003',
     'PUBLIC_CSS': ['/fe_components/iconfont/iconfont.css', '/fe_components/jqwidget/{{theme}}/bh{{version}}.min.css', '/fe_components/jqwidget/{{theme}}/bh-scenes{{version}}.min.css'],
 
-    'PUBLIC_BASE_JS': ['/fe_components/bh_utils.js', '/fe_components/emap{{version}}.js', '/fe_components/amp/ampPlugins.min.js', '/fe_components/jqwidget/globalize.js'],
+    'PUBLIC_BASE_JS': ['/fe_components/bh_utils.js', '/fe_components/emap{{version}}.js', '/fe_components/amp/ampPlugins.min.js', '/fe_components/jqwidget/globalize.js', '/bower_components/jquery.nicescroll/jquery.nicescroll.min.js'],
 
     'PUBLIC_NORMAL_JS': ['/fe_components/bh{{version}}.js', '/fe_components/jqwidget/jqxwidget.min.js', '/fe_components/mock/getmock.js']
   };
