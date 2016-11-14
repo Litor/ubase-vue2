@@ -19,12 +19,11 @@ Vue.mixin({
     }
   },
 
-  // 清除事件监听
   beforeDestroy: function () {
     var eventMap = this.$options.methods
     var currentComponentName = this.$options._ubase_component_name
 
-    // 事件绑定
+    // 清除事件监听
     if (eventMap && currentComponentName) {
       Object.keys(eventMap).forEach(function (item) {
         eventHub.$off(currentComponentName + '.' + item, eventMap[item])

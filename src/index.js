@@ -22,13 +22,13 @@ import {
 
 // Ubase对应用开发暴露的接口
 window.Ubase = {}
-window.Ubase.showLoading = showLoading
-window.Ubase.hideLoading = hideLoading
-window.Ubase.updateState = updateState
-window.Ubase.invoke = invoke
+window.Ubase.showLoading = showLoading // 异步动画显示
+window.Ubase.hideLoading = hideLoading // 异步动画关闭
+window.Ubase.updateState = updateState // 更新state
+window.Ubase.invoke = invoke // 跨组件触发方法
 window.Ubase.beforeInit = null // 定制应用启动前处理钩子 params {config，router, routes，rootApp, next}
 
-// ubase构建工具私有方法
+// ubase 生成app入口文件时用的私有方法
 window._UBASE_PRIVATE = {}
 window._UBASE_PRIVATE.startApp = startApp
 window._UBASE_PRIVATE.init = appInit
